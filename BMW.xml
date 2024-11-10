@@ -1,0 +1,106 @@
+<Schema name="FebianusFelixW UAS">
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Cabang">
+    <Hierarchy name="Cabang" visible="true" hasAll="true" allMemberName="Semua Cabang" primaryKey="PK_Cabang">
+      <Table name="dim_cabang">
+      </Table>
+      <Level name="Kota" visible="true" column="kota_id" nameColumn="nama_kota" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Cabang" visible="true" column="cabang_id" nameColumn="nama_cabang" ordinalColumn="cabang_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="TimeDimension" visible="true" highCardinality="false" name="Time">
+    <Hierarchy name="default" visible="true" hasAll="true" allMemberName="Semua Time">
+      <Table name="dim_penjualan">
+      </Table>
+      <Level name="Time" visible="true" column="tanggal_penjualan" type="Time" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Customer">
+    <Hierarchy name="Customer" visible="true" hasAll="true" allMemberName="Semua Customer" primaryKey="customer_id">
+      <Table name="dim_customer">
+      </Table>
+      <Level name="Nama Customer" visible="true" column="customer_id" nameColumn="nama" ordinalColumn="customer_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Karyawan">
+    <Hierarchy name="Karyawan" visible="true" hasAll="true" allMemberName="Semua Karyawan" primaryKey="PK_karyawan">
+      <Table name="dim_karyawan">
+      </Table>
+      <Level name="Nama Karyawan" visible="true" column="karyawan_id" nameColumn="Krywn_Full" ordinalColumn="karyawan_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Cabang Karyawan" visible="true" column="cabang_id" nameColumn="nama_cabang" ordinalColumn="cabang_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Mobil">
+    <Hierarchy name="Mobil" visible="true" hasAll="true" allMemberName="Semua Mobil" primaryKey="PK_mobil">
+      <Table name="dim_mobil">
+      </Table>
+      <Level name="Kategori" visible="true" column="kategori_id" nameColumn="jenis" ordinalColumn="kategori_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Nama Mobil" visible="true" column="product_id" nameColumn="nama_produk" ordinalColumn="product_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Harga" visible="true" column="product_id" nameColumn="harga" ordinalColumn="product_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Qty" visible="true" column="product_id" nameColumn="qty" ordinalColumn="product_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Promo">
+    <Hierarchy name="Promo" visible="true" hasAll="true" allMemberName="Semua" primaryKey="PK_promo">
+      <Table name="dim_promo">
+      </Table>
+      <Level name="Nama Promo" visible="true" column="promo_id" nameColumn="nama_promo" ordinalColumn="nama_promo" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Persentase Promo" visible="true" column="PK_promo" nameColumn="persen_diskon" ordinalColumn="promo_id" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Penjualan">
+    <Hierarchy name="Penjualan" visible="true" hasAll="true" allMemberName="Semua Penjualan" primaryKey="PK_Sales">
+      <Table name="dim_penjualan">
+      </Table>
+      <Level name="Jumlah Penjualan" visible="true" column="PK_Sales" nameColumn="jumlah_penjualan" ordinalColumn="PK_Sales" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Jumlah Harga" visible="true" column="PK_Sales" nameColumn="jumlah_harga" ordinalColumn="PK_Sales" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Sosial Media">
+    <Hierarchy name="Sosial Media" visible="true" hasAll="true" allMemberName="Semua Sosial Media" primaryKey="media_id">
+      <Table name="dim_sosmed">
+      </Table>
+      <Level name="Nama Sosial Media" visible="true" column="media_id" nameColumn="nama_media" ordinalColumn="media_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="Sales" visible="true" cache="true" enabled="true">
+    <Table name="fact_sales">
+    </Table>
+    <DimensionUsage source="Penjualan" name="Penjualan" visible="true" foreignKey="PK_Sales" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Customer" name="Customer" visible="true" foreignKey="PK_Customer" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Karyawan" name="Karyawan" visible="true" foreignKey="PK_Karyawan" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Cabang" name="Cabang" visible="true" foreignKey="PK_Cabang" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Mobil" name="Mobil" visible="true" foreignKey="PK_Mobil" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Sosial Media" name="Sosial Media" visible="true" foreignKey="PK_Sosmed" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Promo" name="Promo" visible="true" foreignKey="PK_Promo" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Time" name="Time" visible="true" foreignKey="PK_Sales" highCardinality="false">
+    </DimensionUsage>
+    <Measure name="Qty Penjualan" column="Qty" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Harga Jual Sebelum Diskon" column="harga_sebelum_diskon" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Total Harga" column="Total_Harga" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
